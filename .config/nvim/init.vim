@@ -4,8 +4,10 @@ Plug 'tpope/vim-sensible'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'morhetz/gruvbox'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'famiu/nvim-reload'
@@ -31,6 +33,9 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Automatically turn indent guides on
+let g:indent_guides_enable_on_vim_startup = 1
 
 
 " In order to load the nvimtree plugin
@@ -66,6 +71,7 @@ set mouse+=a
 " Move to previous/next
 nnoremap <silent>    <A-,> <Cmd>BufferPrevious<CR>
 nnoremap <silent>    <A-.> <Cmd>BufferNext<CR>
+nnoremap <silent>    <A-c> <Cmd>BufferClose<CR>
 
 """"""""""""""""""" Configuration for CoC
 " Give more space for displaying messages.
