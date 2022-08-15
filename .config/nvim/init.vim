@@ -10,6 +10,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
+
 Plug 'famiu/nvim-reload'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'dpelle/vim-LanguageTool'
@@ -34,6 +35,9 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+" For reloading source ~/.config/nvim/init.vim
+nnoremap <leader>sv :source ~/.config/nvim/init.vim<cr>
+
 " Automatically turn indent guides on
 let g:indent_guides_enable_on_vim_startup = 1
 
@@ -46,6 +50,13 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 
 " Insert date with F5
 noremap <F5> "=strftime("%c")<CR>P
+
+" This allows me to search and replace text under the highlight in visual
+" mode: 
+" Usage: hightlight text in visual mode, then type <C-r> and it will give you
+" a prompt to replace the specific word. 
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
 
 set termguicolors " this variable must be enabled for colors to be applied properly
 

@@ -78,7 +78,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+  git
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -96,6 +98,7 @@ export BUILD_APPS=$BUILD_ROOT/apps
 export BUILD_TC=$BUILD_ROOT/toolchain
 export P4EDITOR=`which nvim`
 export P4CONFIG=.p4config
+
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -124,3 +127,6 @@ export P4CONFIG=.p4config
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Custom commands that only function at work
+[[ -f ~/.zshrc_work ]] && source ~/.zshrc_work 
