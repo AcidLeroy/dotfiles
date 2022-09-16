@@ -1,5 +1,5 @@
 call plug#begin()
-Plug 'phaazon/hop.nvim'
+Plug 'ggandor/leap.nvim'
 Plug 'tpope/vim-sensible'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'morhetz/gruvbox'
@@ -153,30 +153,8 @@ nmap <leader>f  <Plug>(coc-format-selected)
 
 autocmd vimenter * ++nested colorscheme gruvbox
 
-lua require'hop'.setup()
-
-lua << EOF
--- normal mode (easymotion-like)
-vim.api.nvim_set_keymap("n", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>j", "<cmd>HopLineAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("n", "<Leader><Leader>k", "<cmd>HopLineBC<CR>", {noremap=true})
-
--- visual mode (easymotion-like)
-vim.api.nvim_set_keymap("v", "<Leader><Leader>w", "<cmd>HopWordAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>b", "<cmd>HopWordBC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>j", "<cmd>HopLineAC<CR>", {noremap=true})
-vim.api.nvim_set_keymap("v", "<Leader><Leader>k", "<cmd>HopLineBC<CR>", {noremap=true})
-
-
--- normal mode (sneak-like)
-vim.api.nvim_set_keymap("n", "s", "<cmd>HopChar2AC<CR>", {noremap=false})
-vim.api.nvim_set_keymap("n", "S", "<cmd>HopChar2BC<CR>", {noremap=false})
-
--- visual mode (sneak-like)
-vim.api.nvim_set_keymap("v", "s", "<cmd>HopChar2AC<CR>", {noremap=false})
-vim.api.nvim_set_keymap("v", "S", "<cmd>HopChar2BC<CR>", {noremap=false})
-EOF
+" Leap configuration
+lua require('leap').set_default_keymaps()
 
 lua << EOF
 require'nvim-treesitter.configs'.setup {
