@@ -89,6 +89,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 alias vim=nvim
+alias k=kubectl
 
 # Add Visual Studio Code (code)
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
