@@ -57,6 +57,10 @@ noremap <F5> "=strftime("%c")<CR>P
 " a prompt to replace the specific word. 
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 
+" This key mapping is for terminal mode. This allows us to hit escape to go
+" back to normal mode so that we don't have to type C-\ C-n every time we want
+" to go back to normal mode. 
+tnoremap <Esc> <C-\><C-n>
 
 set termguicolors " this variable must be enabled for colors to be applied properly
 
@@ -79,10 +83,10 @@ set spelllang=en_us
 """""""""bar bar configuration 
 set mouse+=a
 "let bufferline.clickable=v:true
-" Move to previous/next
-nnoremap <silent>    <A-,> <Cmd>BufferPrevious<CR>
-nnoremap <silent>    <A-.> <Cmd>BufferNext<CR>
-nnoremap <silent>    <A-c> <Cmd>BufferClose<CR>
+
+nnoremap <leader>bp <Cmd>BufferPrevious<CR>
+nnoremap <leader>bn <Cmd>BufferNext<CR>
+nnoremap <leader>bc <Cmd>BufferClose<CR>
 
 """"""""""""""""""" Configuration for CoC
 " Give more space for displaying messages.
