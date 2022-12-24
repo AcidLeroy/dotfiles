@@ -73,7 +73,10 @@ set ts=2 sts=2 sw=2
 set cursorline
 set hlsearch
 set nocompatible
+set linebreak
 filetype plugin on
+" I added this so that I can edit in the middle of a line in the terminal
+set ma
 
 " Language tool configuration
 let g:languagetool_jar='/Users/ecody/Software/LanguageTool-5.8/languagetool-commandline.jar'
