@@ -84,19 +84,18 @@ source $ZSH/oh-my-zsh.sh
 alias vim=nvim
 alias k=kubectl
 
-# Add Visual Studio Code (code)
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+# These enables  vim in the command line. Unlike vim mode in the Alacritty terminal, 
+# this will allow you to edit the cursor position. The Alacritty terminal will 
+# only allow you to copy and navigate text that has already been output, but not
+# the current terminal. As a result, I included this so that I can mess the current
+# command which I find the most useful feature of being able to navigate vim in 
+# the terminal. 
+bindkey -v
+# These rebinds enable forward and backward search. These get messed up when 
+# using the "bindkey -v" command above.
+bindkey ^R history-incremental-search-backward 
+bindkey ^S history-incremental-search-forward
 
-# Add executable for golang
-export PATH=$PATH:/Users/ecody/go/bin/
-
-# Variables for local Docker development
-export SRC_ROOT=$HOME/Code/src_root
-export BUILD_ROOT=$HOME/Code/build_root
-export BUILD_APPS=$BUILD_ROOT/apps
-export BUILD_TC=$BUILD_ROOT/toolchain
-export P4EDITOR=`which nvim`
-export P4CONFIG=.p4config
 
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -123,7 +122,8 @@ export P4CONFIG=.p4config
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #export PATH="/usr/local/opt/openjdk/bin:$PATH"
-#
+
+
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 eval "$(starship init zsh)"
