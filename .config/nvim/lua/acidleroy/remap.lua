@@ -4,5 +4,5 @@ vim.g.mapleader = ","
 vim.keymap.set("n", "<F5>", '"=strftime("%c")<CR>P')
 vim.keymap.set("t", '<ESC>', '<C-\\><C-n>')
 
-vim.keymap.set("n", "<C-n>", ':Lex<CR>')
+vim.keymap.set("n", "<leader>w", ':ZenMode<CR>')
 
