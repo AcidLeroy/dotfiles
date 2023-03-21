@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["bufferline.nvim"] = {
+    loaded = true,
+    path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
+    url = "https://github.com/akinsho/bufferline.nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -150,6 +155,11 @@ _G.packer_plugins = {
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-cursorline"] = {
+    loaded = true,
+    path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/nvim-cursorline",
+    url = "https://github.com/yamatsum/nvim-cursorline"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -184,6 +194,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ripgrep = {
+    loaded = true,
+    path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/ripgrep",
+    url = "https://github.com/BurntSushi/ripgrep"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
