@@ -220,6 +220,11 @@ _G.packer_plugins = {
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
+  ["vim-markdown-toc"] = {
+    loaded = true,
+    path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/vim-markdown-toc",
+    url = "https://github.com/mzlogin/vim-markdown-toc"
+  },
   ["zen-mode.nvim"] = {
     loaded = true,
     path = "/Users/ecody/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
