@@ -1,7 +1,7 @@
 local builtin = require('telescope.builtin')
 require('telescope').setup{
   defaults = {
-    path_display = { "truncate" },
+    path_display = { "tail" },
   },
 }
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
