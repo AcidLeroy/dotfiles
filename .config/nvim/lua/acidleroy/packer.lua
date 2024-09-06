@@ -4,18 +4,16 @@
 --
 --vim.cmd.packadd('packer.nvim')
 
-return require('packer').startup(function(use)
-  -- Packer can manage itself
+return require('packer').startup(function(use)  -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
+	  'nvim-telescope/telescope.nvim', tag = '0.1.6',
 	  -- or                            , branch = '0.1.x',
 	  requires = { {'nvim-lua/plenary.nvim'}, {'BurntSushi/ripgrep'} }
   }
   -- This will help with fuzzy finding speed
-   use {'nvim-telescope/telescope-fzf-native.nvim',
-     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
 
    use ({
@@ -34,28 +32,20 @@ return require('packer').startup(function(use)
   use('tpope/vim-fugitive')
 
   use {
-	  'VonHeikemen/lsp-zero.nvim',
-	  requires = {
-		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},
-		  {'williamboman/mason.nvim'},
-		  {'williamboman/mason-lspconfig.nvim'},
+  'VonHeikemen/lsp-zero.nvim',
+  branch = 'v3.x',
+  requires = {
+    --- Uncomment the two plugins below if you want to manage the language servers from neovim
+     {'williamboman/mason.nvim'},
+     {'williamboman/mason-lspconfig.nvim'},
 
-		  -- Autocompletion
-		  {'hrsh7th/nvim-cmp'},
-		  {'hrsh7th/cmp-buffer'},
-		  {'hrsh7th/cmp-path'},
-		  {'saadparwaiz1/cmp_luasnip'},
-		  {'hrsh7th/cmp-nvim-lsp'},
-		  {'hrsh7th/cmp-nvim-lua'},
-
-		  -- Snippets
-		  {'L3MON4D3/LuaSnip'},
-		  {'rafamadriz/friendly-snippets'},
-
-      {'mzlogin/vim-markdown-toc'},
-	  }
+    {'neovim/nvim-lspconfig'},
+    {'hrsh7th/nvim-cmp'},
+    {'hrsh7th/cmp-nvim-lsp'},
+    {'L3MON4D3/LuaSnip'},
   }
+}
+
 
   use("folke/zen-mode.nvim")
   use("github/copilot.vim")
@@ -69,7 +59,7 @@ return require('packer').startup(function(use)
   use("yamatsum/nvim-cursorline")
 
   use {
-	  'akinsho/bufferline.nvim', tag = 'v3.*',
+	  'akinsho/bufferline.nvim', tag = '*',
 	  -- or                            , branch = '0.1.x',
 	  requires = { {'nvim-tree/nvim-web-devicons'} }
   }

@@ -2,14 +2,36 @@ local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
 
-lsp.ensure_installed({
-  'tsserver',
-  'eslint',
-  'lua_ls',
-  'gopls',
-  'pyright',
-  'rust_analyzer',
-})
+
+  require('mason').setup({})
+  require('mason-lspconfig').setup({
+    -- Replace the language servers listed here 
+    -- with the ones you want to install
+    ensure_installed = {
+      'tsserver', 
+      'rust_analyzer', 
+
+      'eslint',
+      'lua_ls',
+      'gopls',
+      'pyright'
+    },
+
+    handlers = {
+      function(server_name)
+        require('lspconfig')[server_name].setup({})
+      end,
+    },
+  })
+
+-- lsp.ensure_installed({
+--   'tsserver',
+--   'eslint',
+--   'lua_ls',
+--   'gopls',
+--   'pyright',
+--   'rust_analyzer',
+-- })
 
 -- Fix Undefined global 'vim'
 lsp.configure('lua_ls', {
@@ -37,7 +59,10 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 cmp_mappings['<Tab>'] = nil
 cmp_mappings['<S-Tab>'] = nil
 
-lsp.setup_nvim_cmp({
+--lsp.setup_nvim_cmp({
+--  mapping = cmp_mappings
+--})
+cmp.setup({
   mapping = cmp_mappings
 })
 
