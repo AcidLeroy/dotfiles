@@ -52,8 +52,16 @@ return require('packer').startup(function(use)  -- Packer can manage itself
 
   use("ggandor/leap.nvim")
 
-  use{"nvim-tree/nvim-tree.lua", 
-    requires =  {'nvim-tree/nvim-web-devicons'} 
+  -- Phase 1: Lazy load nvim-tree (saves ~145ms startup time)
+  use {
+    "nvim-tree/nvim-tree.lua", 
+    opt = true,
+    cmd = { 'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFocus', 'NvimTreeFindFile' },
+    keys = '<C-n>',
+    requires = { {'nvim-tree/nvim-web-devicons', opt = true} },
+    config = function()
+      require("nvim-tree").setup()
+    end
   }
 
   use("yamatsum/nvim-cursorline")

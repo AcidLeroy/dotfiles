@@ -1,12 +1,28 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+
+# ~/.zshenv puts Homebrew first, but /etc/zprofile runs path_helper *after*
+# .zshenv in login shells and hoists /usr/bin above /opt/homebrew/bin -- which
+# silently swaps Homebrew python3 for Apple's. Re-assert here; `typeset -U path`
+# drops the now-duplicate entries further down the list.
+path=(/opt/homebrew/bin /opt/homebrew/sbin $path)
+
+# Source an expensive `<tool> init zsh` from cache, regenerating only when the
+# binary is newer than the cache. Saves ~100ms/shell (atuin ~85ms, starship ~12ms).
+_cached_init() {
+  local name=$1; shift
+  local cache=$HOME/.cache/zsh-init/$name.zsh
+  local bin=${commands[$name]}
+  if [[ ! -s $cache || -z $bin || $bin -nt $cache ]]; then
+    mkdir -p $cache:h
+    "$@" >| $cache 2>/dev/null || return
+  fi
+  source $cache
+}
+
+# Skip oh-my-zsh's compaudit permission scan of every fpath dir (~80ms).
+ZSH_DISABLE_COMPFIX=true
 
 # Custom commands that only function at work
-[[ -f ~/.zshrc_work ]] && source ~/.zshrc_work 
+[[ -f ~/.zshrc_work ]] && source ~/.zshrc_work
 #[[ -f ~/.kubebuilder_completion ]] && source ~/.kubebuilder_completion
 
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -19,7 +35,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -101,8 +117,8 @@ alias k=kubectl
 bindkey -v
 # These rebinds enable forward and backward search. These get messed up when 
 # using the "bindkey -v" command above.
-bindkey ^R history-incremental-search-backward 
-bindkey ^S history-incremental-search-forward
+#bindkey ^R history-incremental-search-backward 
+#bindkey ^S history-incremental-search-forward
 
 
 
@@ -130,15 +146,64 @@ bindkey ^S history-incremental-search-forward
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #export PATH="/usr/local/opt/openjdk/bin:$PATH"
-
+_cached_init starship starship init zsh
 export PATH="${HOME}/go/bin:${PATH}"
+export KUBE_EDITOR=nvim
 
+#source ~/.zsh/zsh-kubectl-prompt/kubectl.zsh
+#RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Autocompletion stuff for kubebuilder
 [[ -f ~/.kubebuilder_completion ]] && source ~/.kubebuilder_completion
 alias okta-sync='granted sso populate --sso-region us-east-1 https://d-9067bf0e58.awsapps.com/start#'
+alias gitpush='git add -u && git commit --amend --no-edit && git push -f'
+
+kgetall() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: kgetall <namespace>"
+    return 1
+  fi
+  kubectl api-resources --verbs=list --namespaced -o name | \
+    xargs -n 1 kubectl get --show-kind --ignore-not-found -n "$1"
+}
+
+# Pin Teleport to the persistent kubeconfig. `kubie ctx` spawns a subshell with
+# KUBECONFIG set to an ephemeral temp file holding only the selected context, so
+# `tsh kube login` run inside a kubie shell writes the new contexts into that temp
+# file -- deleted on exit, never seen by kubie. Workflow is `tsh kube login --all`
+# once, then pick with `kubie ctx`; new contexts show up in a *new* shell.
+tsh() {
+  KUBECONFIG="$HOME/.kube/config" command tsh "$@"
+}
+
+# Atuin (shell history) 
+source $HOME/.atuin/bin/env
+_cached_init atuin atuin init zsh
+export PATH="$HOME/.local/bin:$PATH"
+
+# Launch Brave with CDP remote-debugging port for chrome-devtools-mcp (Claude Code).
+# Brave ignores --remote-debugging-port if already running, so quit first.
+# The browser-settings toggle is broken on this version; the CLI flag is the reliable path.
+brave() {
+  if pgrep -x "Brave Browser" >/dev/null 2>&1; then
+    echo "Brave running — quitting to apply --remote-debugging-port=9222"
+    osascript -e 'quit app "Brave Browser"'
+    sleep 2
+  fi
+  open -na "Brave Browser" --args --remote-debugging-port=9222
+}
+#export VAULT_ADDR="https://vault.tuk.us.omniva.cloud:8200"
+
+# bun completions
+[ -s "/Users/codyeilar/.bun/_bun" ] && source "/Users/codyeilar/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Re-apply uniqueness. `typeset -U path` in ~/.zshenv only dedupes on *array*
+# assignment; the `export PATH="x:$PATH"` lines above assign the scalar, which
+# slips duplicates past it when a nested shell inherits an already-built PATH.
+# path only -- fpath is already deduped in ~/.zshenv and compinit has run by now.
+typeset -U path
